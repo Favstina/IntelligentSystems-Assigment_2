@@ -5,59 +5,65 @@ tags:
 - feature-extraction
 - dense
 - generated_from_trainer
-- dataset_size:1000
+- dataset_size:4292
 - loss:ContrastiveLoss
 base_model: sentence-transformers/all-MiniLM-L6-v2
 widget:
-- source_sentence: 'Notwithstanding the foregoing, “Confidential Information” shall
-    not include the following types of information if the Recipient establishes by
-    competent proof that the information: (iv) is supplied to the Recipient by a third
-    party without restriction on such disclosure; or'
+- source_sentence: '(a) Vendor shall: (i) Not use any Confidential Information except
+    as required for the Purpose. It shall not be modified except by a written agreement
+    dated subsequent to the date of this Agreement and signed by both parties. None
+    of the provisions of this Agreement shall be deemed to have been waived by any
+    act or acquiescence on the part of IBC, the Vendor, their agents, or employees,
+    but only by an instrument in writing signed by an authorized employee of IBC and
+    the Vendor. (f) This Agreement shall be binding upon and inure to the benefit
+    of each party’s respective successors and lawful assigns; provided, however, that
+    Vendor may not assign this Agreement (whether by operation of law, sale of securities
+    or assets, merger or otherwise), in whole or in part, without the prior written
+    approval of IBC.'
   sentences:
-  - Receiving Party shall notify Disclosing Party in case Receiving Party is required
-    by law, regulation or judicial process to disclose any Confidential Information.
-  - Receiving Party may acquire information similar to Confidential Information from
-    a third party.
-  - Some obligations of Agreement may survive termination of Agreement.
-- source_sentence: 3. For a period of five (5) years from the date of receiving it,
-    all Confidential Information will be maintained in confidence by the receiving
-    party, will not be disclosed to any third party or to any persons employed in
-    its business other than those having a need to know for the purposes set forth
-    above, and will be protected with the same degree of care as the receiving party
-    normally uses in the protection of its own confidential and proprietary information,
-    but in no case with any less degree than reasonable care.
-  sentences:
-  - Receiving Party may share some Confidential Information with some of Receiving
-    Party's employees.
-  - Confidential Information may include verbally conveyed information.
-  - Receiving Party may create a copy of some Confidential Information in some circumstances.
-- source_sentence: Notwithstanding the above, Confidential Information will not include
-    any information that is (d) independently developed by the receiving party;
-  sentences:
-  - Receiving Party shall notify Disclosing Party in case Receiving Party is required
-    by law, regulation or judicial process to disclose any Confidential Information.
-  - Receiving Party may independently develop information similar to Confidential
-    Information.
-  - Receiving Party shall notify Disclosing Party in case Receiving Party is required
-    by law, regulation or judicial process to disclose any Confidential Information.
-- source_sentence: 'Beyond this, each party also undertakes as follows: 3.3.1 not
-    to use the confidential information of the other party for any purposes other
-    than the purpose contemplated by this agreement;'
-  sentences:
-  - Receiving Party shall not use any Confidential Information for any purpose other
-    than the purposes stated in Agreement.
   - Receiving Party shall not disclose the fact that Agreement was agreed or negotiated.
-  - Receiving Party shall notify Disclosing Party in case Receiving Party is required
-    by law, regulation or judicial process to disclose any Confidential Information.
-- source_sentence: Any Proprietary Information provided by one Party to the other
-    shall be used only in furtherance of the Purpose.
+  - Receiving Party may share some Confidential Information with some third-parties
+    (including consultants, agents and professional advisors).
+  - Receiving Party shall not use any Confidential Information for any purpose other
+    than the purposes stated in Agreement.
+- source_sentence: The aforesaid restrictions on the parties shall not apply to any
+    Proprietary/Confidential Information which iii. Is independently developed by
+    the receiving party;
   sentences:
   - Receiving Party may share some Confidential Information with some of Receiving
     Party's employees.
+  - Receiving Party shall notify Disclosing Party in case Receiving Party is required
+    by law, regulation or judicial process to disclose any Confidential Information.
   - Receiving Party may independently develop information similar to Confidential
     Information.
+- source_sentence: '1. The confidential information disclosed by Company to MSC under
+    this Agreement is described as: customer and prospective customer contact data
+    ("Information").'
+  sentences:
+  - Receiving Party shall destroy or return some Confidential Information upon the
+    termination of Agreement.
+  - Confidential Information shall only include technical information.
   - Receiving Party shall not use any Confidential Information for any purpose other
     than the purposes stated in Agreement.
+- source_sentence: I. Supplier agrees to keep strictly confidential all documents,
+    records, correspondence and transactions in any form concerning the operation
+    or business of Vedrova, Group TP&H or its customers. IV. Without limitation to
+    clause I., Vedrova’ s confidential information includes any and all of its customer
+    information, supplier information, internal processes, standard operating procedures,
+    strategies, business information and rates.
+  sentences:
+  - All Confidential Information shall be expressly identified by the Disclosing Party.
+  - Some obligations of Agreement may survive termination of Agreement.
+  - Confidential Information shall only include technical information.
+- source_sentence: (e) Vendor shall, at IBC’s request, return all originals, copies,
+    reproductions and summaries of Confidential Information and all other tangible
+    materials and devices provided to Vendor as Confidential Information, or at IBC's
+    option, certify destruction of the same.
+  sentences:
+  - Receiving Party may retain some Confidential Information even after the return
+    or destruction of Confidential Information.
+  - Receiving Party may create a copy of some Confidential Information in some circumstances.
+  - Some obligations of Agreement may survive termination of Agreement.
 pipeline_tag: sentence-similarity
 library_name: sentence-transformers
 ---
@@ -112,9 +118,9 @@ from sentence_transformers import SentenceTransformer
 model = SentenceTransformer("sentence_transformers_model_id")
 # Run inference
 sentences = [
-    'Any Proprietary Information provided by one Party to the other shall be used only in furtherance of the Purpose.',
-    'Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement.',
-    'Receiving Party may independently develop information similar to Confidential Information.',
+    "(e) Vendor shall, at IBC’s request, return all originals, copies, reproductions and summaries of Confidential Information and all other tangible materials and devices provided to Vendor as Confidential Information, or at IBC's option, certify destruction of the same.",
+    'Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information.',
+    'Some obligations of Agreement may survive termination of Agreement.',
 ]
 embeddings = model.encode(sentences)
 print(embeddings.shape)
@@ -123,9 +129,9 @@ print(embeddings.shape)
 # Get the similarity scores for the embeddings
 similarities = model.similarity(embeddings, embeddings)
 print(similarities)
-# tensor([[1.0000, 0.4251, 0.3922],
-#         [0.4251, 1.0000, 0.0990],
-#         [0.3922, 0.0990, 1.0000]])
+# tensor([[1.0000, 0.9799, 0.2909],
+#         [0.9799, 1.0000, 0.3024],
+#         [0.2909, 0.3024, 1.0000]])
 ```
 
 <!--
@@ -170,19 +176,19 @@ You can finetune this model on your own dataset.
 
 #### Unnamed Dataset
 
-* Size: 1,000 training samples
+* Size: 4,292 training samples
 * Columns: <code>sentence_0</code>, <code>sentence_1</code>, and <code>label</code>
 * Approximate statistics based on the first 1000 samples:
-  |         | sentence_0                                                                          | sentence_1                                                                         | label                                                          |
-  |:--------|:------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------|:---------------------------------------------------------------|
-  | type    | string                                                                              | string                                                                             | float                                                          |
-  | details | <ul><li>min: 15 tokens</li><li>mean: 81.75 tokens</li><li>max: 256 tokens</li></ul> | <ul><li>min: 10 tokens</li><li>mean: 17.08 tokens</li><li>max: 30 tokens</li></ul> | <ul><li>min: 0.0</li><li>mean: 0.21</li><li>max: 1.0</li></ul> |
+  |         | sentence_0                                                                         | sentence_1                                                                         | label                                                         |
+  |:--------|:-----------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------|:--------------------------------------------------------------|
+  | type    | string                                                                             | string                                                                             | float                                                         |
+  | details | <ul><li>min: 8 tokens</li><li>mean: 89.44 tokens</li><li>max: 256 tokens</li></ul> | <ul><li>min: 10 tokens</li><li>mean: 17.07 tokens</li><li>max: 30 tokens</li></ul> | <ul><li>min: 0.0</li><li>mean: 0.2</li><li>max: 1.0</li></ul> |
 * Samples:
-  | sentence_0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | sentence_1                                                                                                                                                                      | label            |
-  |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|
-  | <code>The obligations under Article 2 to keep confidential all Confidential Information or Proprietary Information shall not apply to the extent that the Member can prove that any of that information: b) is lawfully obtained by the Member from a third party without an obligation of confidentiality, provided that third party is not, to the ICC Court’s best knowledge, in breach of any obligation of confidentiality to the ICC Court relating to that information; or</code>                                                                              | <code>Receiving Party may acquire information similar to Confidential Information from a third party.</code>                                                                    | <code>0.0</code> |
-  | <code>Obligations of confidentiality will not apply to information that: (e) Recipient is required by law to disclose, provided the Recipient shall, where possible, so advise Provider in advance of such disclosure so as to allow Provider an opportunity to challenge such disclosure.</code>                                                                                                                                                                                                                                                                     | <code>Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information.</code> | <code>0.0</code> |
-  | <code>1.1. All information disclosed by the Town in oral, written, graphic, photographic, recorded, prototype, sample or in any other form that is related to the Information Technology, Geographic Information Systems (GIS) and Supervisory Control and Data Acquisition (SCADA) systems for Town of The Blue Mountains or any information written, graphic, photographic, recorded, prototype, sample or in any other form that is generated by the Provider for the purpose of doing business with The Town shall be considered Confidential Information.</code> | <code>Confidential Information shall only include technical information.</code>                                                                                                 | <code>0.0</code> |
+  | sentence_0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | sentence_1                                                                                                                              | label            |
+  |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------|:-----------------|
+  | <code>VI. The CONTRACTOR is obliged to commit his employees to the appropriate secrecy in written form as far as confidential documents, information, knowledge, samples and data are made available to these in the course of the cooperation or they can gain access to documents, information, knowledge, samples and data by the PURCHASER.</code>                                                                                                                                                          | <code>Receiving Party may share some Confidential Information with some of Receiving Party's employees.</code>                          | <code>0.0</code> |
+  | <code>Notwithstanding this Section 4(f), the Receiving Party shall not be required to purge Confidential Information from its computer system’s historical back-up media, provided that such Confidential Information that is retained will remain subject to the terms of this Agreement.</code>                                                                                                                                                                                                               | <code>Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information.</code> | <code>0.0</code> |
+  | <code>The term "Evaluation Material" does not include information which (iii) is or becomes available to the receiving party on a non-confidential basis from a source other than the disclosing party or any of its Representatives, provided that such source was not known by the receiving party to be bound by a confidentiality agreement with or other contractual, legal or fiduciary obligation of confidentiality to the disclosing party or any other party with respect to such information,</code> | <code>Receiving Party may acquire information similar to Confidential Information from a third party.</code>                            | <code>0.0</code> |
 * Loss: [<code>ContrastiveLoss</code>](https://sbert.net/docs/package_reference/sentence_transformer/losses.html#contrastiveloss) with these parameters:
   ```json
   {
@@ -325,9 +331,14 @@ You can finetune this model on your own dataset.
 </details>
 
 ### Training Logs
-| Epoch | Step | Training Loss |
-|:-----:|:----:|:-------------:|
-| 2.0   | 500  | 0.0124        |
+| Epoch  | Step | Training Loss |
+|:------:|:----:|:-------------:|
+| 0.4660 | 500  | 0.0119        |
+| 0.9320 | 1000 | 0.0065        |
+| 1.3979 | 1500 | 0.0049        |
+| 1.8639 | 2000 | 0.0048        |
+| 2.3299 | 2500 | 0.0034        |
+| 2.7959 | 3000 | 0.0028        |
 
 
 ### Framework Versions
